@@ -1,6 +1,4 @@
 import cv2
-import requests
-import numpy as np
 from pyzbar import pyzbar
 
 # ESP32-CAM URL for video streaming

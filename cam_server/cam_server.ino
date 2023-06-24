@@ -1,9 +1,12 @@
 #include <WiFi.h>
 #include <WebServer.h>
+#include "camera_pins.h"
 
 const char* ssid = "AAA";
 const char* password = "181321418";
 WebServer server(80);
+
+#define CAMERA_MODEL_AI_THINKER // Has PSRAM
 
 void setup() {
   Serial.begin(115200);
@@ -34,9 +37,13 @@ void loop() {
 void handleData() {
   if (server.hasArg("qr_data")) {
     String qrData = server.arg("qr_data");
+    // Process the received QR code data
+    // Add your code here to perform actions based on the received data
+    // For example, you can control ESP32-CAM outputs, trigger events, etc.
+    // Replace the following line with your desired actions
     Serial.print("Received QR code: ");
     Serial.println(qrData);
-
+    
     server.send(200, "text/plain", "Data received");
   } else {
     server.send(400, "text/plain", "Invalid request");

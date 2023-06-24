@@ -71,12 +71,10 @@ void loop() {
         stop();
         putDown();
         releaseUp();
-
       }
       // getDecision();
       Serial.println("Box droped to correct location");
     }
     // boxfound = false;
   }
-
 }

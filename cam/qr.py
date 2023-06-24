@@ -37,7 +37,7 @@ while True:
         cv2.putText(frame, qr_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
     # Display the frame
-    cv2.imshow("QR Code Reader", frame)
+    cv2.imshow("RMB", frame)
 
     # Exit the loop when 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):

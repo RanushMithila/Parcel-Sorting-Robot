@@ -1,13 +1,14 @@
-#include <SoftwareSerial.h>
+#include "dataTransfer.h"
 
 SoftwareSerial arduinoSerial(3, 2);  // RX, TX pins connected to ESP32
 
-void setup() {
+void setupDataTransfer(){
   Serial.begin(115200);  // Serial monitor for debugging
   arduinoSerial.begin(9600);  // Serial communication with ESP32
 }
 
-void loop() {
+
+String getData(){
   if (arduinoSerial.available()) {
     String receivedData;
     while (arduinoSerial.available()) {
@@ -17,5 +18,6 @@ void loop() {
     Serial.print("Received data: ");
     Serial.println(receivedData);
   }
+  return receivedData;
   delay(500);
 }

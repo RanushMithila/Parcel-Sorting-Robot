@@ -2,19 +2,21 @@
 #include <WebServer.h>
 #include "camera_pins.h"
 
-const char* ssid = "AAA";
-const char* password = "181321418";
+const char *ssid = "AAA";
+const char *password = "181321418";
 WebServer server(80);
 
 #define CAMERA_MODEL_AI_THINKER // Has PSRAM
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   delay(1000);
 
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(1000);
     Serial.println("Connecting to WiFi...");
   }
@@ -29,13 +31,16 @@ void setup() {
   Serial.println("' to connect");
 }
 
-void loop() {
+void loop()
+{
   server.handleClient();
   // Add any additional code for the main loop
 }
 
-void handleData() {
-  if (server.hasArg("qr_data")) {
+void handleData()
+{
+  if (server.hasArg("qr_data"))
+  {
     String qrData = server.arg("qr_data");
     // Process the received QR code data
     // Add your code here to perform actions based on the received data
@@ -43,9 +48,11 @@ void handleData() {
     // Replace the following line with your desired actions
     Serial.print("Received QR code: ");
     Serial.println(qrData);
-    
+
     server.send(200, "text/plain", "Data received");
-  } else {
+  }
+  else
+  {
     server.send(400, "text/plain", "Invalid request");
   }
 }

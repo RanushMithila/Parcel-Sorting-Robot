@@ -45,3 +45,21 @@ void stop(){
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
 }
+
+
+void moveLeft(){
+  Serial.println("Turning Left...");
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+
+void moveRight(){
+  Serial.println("Turning Right...");
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+}

@@ -1,8 +1,13 @@
 #include "esp_camera.h"
+// #include "sendReq.h"
 #include <WebServer.h>
 #include <SoftwareSerial.h>
 #include <WiFi.h>
-WebServer server(80);
+#include <HTTPClient.h>
+
+WebServer server(85);
+//start HTTP Client
+HTTPClient http;
 
 #define CAMERA_MODEL_AI_THINKER // Has PSRAM
 SoftwareSerial arduinoSerial(14, 15);  // RX, TX pins connected to ESP32
@@ -116,10 +121,10 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("");
   Serial.println("WiFi connected");
 
   startCameraServer();
+  
 
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
@@ -133,6 +138,7 @@ void setup() {
 
 void loop() {
   server.handleClient();
+  dataFromArduino();
 }
 
 
@@ -147,4 +153,41 @@ void handleData() {
   } else {
     server.send(400, "text/plain", "Invalid request");
   }
+}
+
+void dataFromArduino(){
+  int receivedData;
+  Serial.println("Test");
+  if(arduinoSerial.available()){
+    while (arduinoSerial.available()) {
+        receivedData += (int)arduinoSerial.read();  // Read data from the Arduino Uno
+    }
+  }
+  delay(500);
+  Serial.print("Data Received: ");
+  Serial.println(receivedData);
+  if(receivedData == 1){
+    sendReq();
+  }
+}
+
+
+
+void sendReq(){
+  http.begin("http://192.168.43.180/camera?status=1"); //The URL
+  int httpCode = http.GET();
+
+  if (httpCode > 0) { //Check for the returning code
+  
+        String payload = http.getString();
+        Serial.println(httpCode);
+        http.end(); //Free the resources
+        // Serial.println(payload);
+        arduinoSerial.write(payload.c_str());
+      }
+  
+    else {
+      Serial.println("Error on HTTP request");
+    }
+  
 }

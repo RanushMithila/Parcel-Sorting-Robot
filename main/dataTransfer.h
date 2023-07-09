@@ -5,6 +5,7 @@
 
 void setupDataTransfer();
 void getData();
+void cameraON();
 
 
 #endif

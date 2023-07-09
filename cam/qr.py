@@ -1,8 +1,11 @@
 import cv2
 from pyzbar import pyzbar
+import requests
+
 
 # ESP32-CAM URL for video streaming
 url = "http://192.168.43.161:81/stream"
+exit = False
 
 # Create a VideoCapture object to read frames from the stream
 cap = cv2.VideoCapture(url)
@@ -28,6 +31,11 @@ while True:
         
         # Print the QR code data
         print(qr_data)
+        x = requests.get("http://192.168.43.161:85/data?qr_data="+qr_data)
+        print(x.text)
+        if (x.text == "Data received"):
+            exit = True
+        # break
 
         # Draw a rectangle around the QR code
         (x, y, w, h) = qr_code.rect
@@ -38,7 +46,9 @@ while True:
 
     # Display the frame
     cv2.imshow("RMB", frame)
-
+    
+    if (exit):
+        break
     # Exit the loop when 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

@@ -6,5 +6,7 @@ void setupWheels();
 void forward();
 void backward();
 void stop();
+void moveLeft();
+void moveRight();
 
 #endif

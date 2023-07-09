@@ -8,8 +8,9 @@ void testGrip(int position);
 void grab();
 void liftBox();
 void putDown();
-void releaseUp();
+void release();
 void turnLeft();
+void turnMid();
 // void releaseLeft();
 // void releaseRight();
 

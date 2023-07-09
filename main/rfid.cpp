@@ -16,13 +16,15 @@ bool readRfid(String address){
     if (rfid.readCardSerial()) {
       rfidCard = String(rfid.serNum[0]) + String(rfid.serNum[1]) + String(rfid.serNum[2]) + String(rfid.serNum[3]);
       if (rfidCard == "240132150" && address == "Colombo"){
+        Serial.println(rfidCard);
         return true;
       }else if (rfidCard == "8015945150" && address == "Polonnaruwa"){
+        Serial.println(rfidCard);
         return true;
       }else{
+        Serial.println(rfidCard);
         return false;
       }
-      Serial.println(rfidCard);
     }
     rfid.halt();
   }

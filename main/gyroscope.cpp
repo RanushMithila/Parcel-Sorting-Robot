@@ -4,7 +4,7 @@ Adafruit_MPU6050 mpu;
 float avg = 0.0;
 
 void setupGyroscope(){
-  while (!Serial)
+    while (!Serial)
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   Serial.println("Adafruit MPU6050 test!");
@@ -19,37 +19,17 @@ void setupGyroscope(){
   delay(100);
 }
 
-float getGyroscope(){
+int getGyroscope(){
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-
-  Serial.print("X: ");
-  Serial.println(a.acceleration.x);
-
-  delay(500);
-  return a.acceleration.x;
-}
-
-void getAvg(){
-  Serial.println("function called");
-  int count = 4;
-  float tot = 0.0;
-  while (count >= 0){
-    tot += getGyroscope();
-    count--;
-  }
-  Serial.println(tot);
-  avg = tot/5;
-}
-
-void getDecision(){
-  // Serial.println("function called");
-  getAvg();
-  // Serial.println("Calculating avg");
-  float diff = abs(getGyroscope() - avg);
-  if (diff > 0.15){
-    Serial.println("Turn");
-  }else{
-    Serial.println("Don't turn");
+  if (a.acceleration.x >= 1) {
+    Serial.println(" - Turning Right");
+    return 1;
+  } else if (a.acceleration.x <= -1) {
+    Serial.println(" - Turning Left");
+    return -1;
+  } else {
+    Serial.println(" - Going Straight");
+    return 0;
   }
 }

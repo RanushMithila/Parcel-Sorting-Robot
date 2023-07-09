@@ -174,7 +174,7 @@ void dataFromArduino(){
 
 
 void sendReq(){
-  http.begin("http://192.168.43.180/camera?status=1"); //The URL
+  http.begin("http://192.168.43.180:5000/camera"); //The URL
   int httpCode = http.GET();
 
   if (httpCode > 0) { //Check for the returning code

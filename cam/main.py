@@ -63,12 +63,12 @@ def read_qr():
 app = Flask(__name__)
 
     
-@app.route('/turnon', methods=['GET'])
+@app.route('/camera', methods=['GET'])
 def turn_on():
     print("turning it on")
-    thread = threading.Thread(target=read_qr())
+    thread = threading.Thread(target=read_qr)
     thread.start()
     return 'ON'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

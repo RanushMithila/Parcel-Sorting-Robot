@@ -5,7 +5,7 @@
 #include <RFID.h>
 
 void setupRfid();
-bool readRfid(String address);
+bool readRfid(char *address);
 
 
 #endif

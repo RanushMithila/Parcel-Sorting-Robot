@@ -10,7 +10,9 @@
 
 int distance = 0;
 int direction = -99;
+int count = 3;  //number of box
 int val;
+char city = "";
 bool boxfound = false;  //status about box found or not
 bool grabBox = false; //status about the box grabed or not
 bool addressFound = false;  //status about correct address found or not
@@ -28,13 +30,26 @@ void setup() {
 
 void loop() {
   distance = measure();
-
+  if (count < 0){
+    Serial.println("All done.");
+    for (;;);
+  }
   if (!boxfound){
     Serial.println("Box not detect.");
     if (minDis <= distance && distance < maxDis){
       Serial.println("Box detected.");
+
       boxfound = true;
+      count -= 1; //grab one
       cameraON();
+
+      while(1){
+        city = getQRData();
+        if (city != ""){
+          Serial.println(city);
+          break;
+        }
+      }
       //call to python server and turn on cam server
       release();
       putDown();
@@ -62,7 +77,18 @@ void loop() {
       stop();
       if (minDis <= distance < maxDis){
         Serial.println("Box detected.");
+
         boxfound = true;
+        count -= 1; //grab one
+        cameraON();
+
+        while(1){
+          city = getQRData();
+          if (city != ""){
+            Serial.println(city);
+            break;
+          }
+        }
         release();
         putDown();
         grab();
@@ -78,7 +104,18 @@ void loop() {
       stop();
       if (minDis <= distance < maxDis){
         Serial.println("Box detected.");
+
         boxfound = true;
+        count -= 1; //grab one
+        cameraON();
+
+        while(1){
+          city = getQRData();
+          if (city != ""){
+            Serial.println(city);
+            break;
+          }
+        }
         release();
         putDown();
         grab();
@@ -90,10 +127,11 @@ void loop() {
     if (grabBox){
       backward();
       addressFound = readRfid("Colombo");
-      delay(5000);
+      // addressFound = readRfid(city);
+      delay(500);
       Serial.print("addressFound: ");
       Serial.println(addressFound);
-      delay(5000);
+      delay(500);
       if (addressFound && boxfound){
         stop();
         turnLeft();
@@ -104,11 +142,11 @@ void loop() {
         boxfound = false;
         addressFound = false;
         grabBox = false;
-        Serial.println("Work Done....");
+        Serial.println("One Work Done....");
         delay(4000);
       }
       // getDecision();
-      Serial.println("Box droped to correct location");
+      // Serial.println("Box droped to correct location");
     }
     // boxfound = false;
   }

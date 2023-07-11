@@ -137,8 +137,8 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();
   dataFromArduino();
+  server.handleClient();
 }
 
 
@@ -156,17 +156,16 @@ void handleData() {
 }
 
 void dataFromArduino(){
-  int receivedData;
-  Serial.println("Test");
+  String receivedData;
   if(arduinoSerial.available()){
     while (arduinoSerial.available()) {
-        receivedData += (int)arduinoSerial.read();  // Read data from the Arduino Uno
+        receivedData += (char)arduinoSerial.read();  // Read data from the Arduino Uno
     }
-  }
-  delay(500);
+  delay(800);
   Serial.print("Data Received: ");
   Serial.println(receivedData);
-  if(receivedData == 1){
+  }
+  if(strcmp(receivedData.c_str(), "1") == 0){
     sendReq();
   }
 }

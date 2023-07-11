@@ -8,7 +8,7 @@ void setupDataTransfer(){
 }
 
 
-void getData(){
+char *getQRData(){
   if (arduinoSerial.available()) {
     String receivedData;
     while (arduinoSerial.available()) {
@@ -17,6 +17,7 @@ void getData(){
     // int data = receivedData.toInt();  // Convert the received string to an integer
     Serial.print("Received data: ");
     Serial.println(receivedData);
+    return receivedData.c_str();
   }
   // return receivedData;
   delay(500);
@@ -25,4 +26,5 @@ void getData(){
 void cameraON(){
   arduinoSerial.write(1);
   Serial.println("Sent");
+  delay(1000);
 }

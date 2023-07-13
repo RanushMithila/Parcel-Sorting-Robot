@@ -29,7 +29,17 @@ bool readRfid(char address){
         Serial.println(rfidCard);
         stop();
         return true;
-      }else{
+      }else if (rfidCard == "177968228" && address == '5'){
+        Serial.println(rfidCard);
+        stop();
+        return true;
+      }else if (rfidCard == "something"){
+        Serial.println(rfidCard);
+        Serial.println("Couldn't find correct location so dump it in this location.");
+        stop();
+        return true;
+      }
+      else{
         Serial.println(rfidCard);
         return false;
       }

@@ -11,7 +11,7 @@ Servo grip;
 #define bottom 85
 #define rightBot 100
 #define up 160
-#define midLoc 140
+#define midLoc 135
 #define rightLoc 40
 
 void setupArm()

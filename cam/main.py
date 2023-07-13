@@ -46,6 +46,8 @@ def read_qr():
                 qr_data = "7"
             elif (qr_data == "Gampaha"):
                 qr_data = "6"
+            else:
+                qr_data ="5"
             
             # Print the QR code data
             print(qr_data)
@@ -83,7 +85,12 @@ def turn_on():
     print("turning it on")
     thread = threading.Thread(target=read_qr)
     thread.start()
-    return 'ON'
+    timeout_duration = 10
+    thread.join(timeout_duration)
+    if thread.is_alive():
+        return '5'
+    else:
+        return 'ON'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

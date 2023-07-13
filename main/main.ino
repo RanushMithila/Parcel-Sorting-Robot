@@ -2,7 +2,6 @@
 #include "move.h"
 #include "arm.h"
 #include "rfid.h"
-#include "gyroscope.h"
 #include "dataTransfer.h"
 
 #define minDis 9
@@ -21,7 +20,6 @@ void setup() {
   setupMeasure();
   setupWheels();
   setupArm();
-  // setupGyroscope();
   setupRfid();
   setupDataTransfer();
   Serial.println("Waiting....");
@@ -40,15 +38,6 @@ void loop() {
       Serial.println("Box detected.");
 
       boxfound = true;
-      count -= 1; //grab one
-      //==============================
-        // commented because I need to test it
-        //==============================
-        
-        cameraON();
-
-        //==============================
-
       while(1){
         cameraON();
         getQRData(city);
@@ -77,15 +66,6 @@ void loop() {
         Serial.println("Box detected.");
 
         boxfound = true;
-        count -= 1; //grab one
-        //==============================
-        // commented because I need to test it
-        //==============================
-        
-        cameraON();
-
-        //==============================
-
         while(1){
           cameraON();
           getQRData(city);
@@ -114,8 +94,6 @@ void loop() {
         Serial.println("Box detected.");
 
         boxfound = true;
-        count -= 1; //grab one
-
         while(1){
           cameraON();
           getQRData(city);
@@ -156,7 +134,7 @@ void loop() {
         addressFound = false;
         grabBox = false;
         Serial.println("One Work Done....");
-        // city = '0';
+        count -= 1; //drop one
         Serial.print("City: ");
         Serial.println(city);
         delay(4000);

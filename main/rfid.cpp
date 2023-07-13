@@ -12,15 +12,20 @@ void setupRfid(){
   rfid.init();
 }
 
-bool readRfid(char *address){
+bool readRfid(char address){
+  Serial.println(address);
   if (rfid.isCard()) {
     if (rfid.readCardSerial()) {
       rfidCard = String(rfid.serNum[0]) + String(rfid.serNum[1]) + String(rfid.serNum[2]) + String(rfid.serNum[3]);
-      if (rfidCard == "240132150" && address == "Colombo"){
+      if (rfidCard == "240132150" && address == '8'){
         Serial.println(rfidCard);
         stop();
         return true;
-      }else if (rfidCard == "8015945150" && address == "Polonnaruwa"){
+      }else if (rfidCard == "8015945150" && address == '9'){
+        Serial.println(rfidCard);
+        stop();
+        return true;
+      }else if (rfidCard == "2112081150" && address == '6'){
         Serial.println(rfidCard);
         stop();
         return true;

@@ -8,7 +8,14 @@ import requests
 def read_qr():
     # ESP32-CAM URL for video streaming
     url = "http://192.168.43.161:81/stream"
+    resChange = "http://192.168.43.161/control?var=framesize&val=7"
+    ledOn = "http://192.168.43.161/control?var=led_intensity&val=175"
     exit = False
+    
+    res = requests.get(resChange)
+    led = requests.get(ledOn)
+    print("Resolution set:", res.status_code)
+    print("Led ON:", led.status_code)
 
     # Create a VideoCapture object to read frames from the stream
     cap = cv2.VideoCapture(url)
@@ -31,6 +38,14 @@ def read_qr():
         for qr_code in qr_codes:
             # Extract the QR code data
             qr_data = qr_code.data.decode("utf-8")
+            if (qr_data == "Polonnaruwa"):
+                qr_data = "9"
+            elif (qr_data == "Colombo"):
+                qr_data = "8"
+            elif (qr_data == "Trincomalee"):
+                qr_data = "7"
+            elif (qr_data == "Gampaha"):
+                qr_data = "6"
             
             # Print the QR code data
             print(qr_data)

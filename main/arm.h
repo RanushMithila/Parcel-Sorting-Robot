@@ -11,6 +11,8 @@ void putDown();
 void release();
 void turnLeft();
 void turnMid();
+void putDownRight();
+void liftBoxRight();
 // void releaseLeft();
 // void releaseRight();
 

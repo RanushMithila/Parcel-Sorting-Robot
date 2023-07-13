@@ -28,6 +28,8 @@ void forward(){
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
+  delay(100);
+  stop();
 }
 
 void backward(){
@@ -36,6 +38,8 @@ void backward(){
   digitalWrite(in2, HIGH);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
+  delay(100);
+  stop();
 }
 
 void stop(){

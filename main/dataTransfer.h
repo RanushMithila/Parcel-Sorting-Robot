@@ -4,7 +4,7 @@
 #include <SoftwareSerial.h>
 
 void setupDataTransfer();
-char *getQRData();
+void getQRData(char &city);
 void cameraON();
 
 

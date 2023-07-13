@@ -1,5 +1,4 @@
 #include "esp_camera.h"
-// #include "sendReq.h"
 #include <WebServer.h>
 #include <SoftwareSerial.h>
 #include <WiFi.h>
@@ -23,8 +22,8 @@ void startCameraServer();
 void setupLedFlash(int pin);
 
 void setup() {
-  Serial.begin(115200);
-  arduinoSerial.begin(9600);  // Serial communication with ESP32
+  Serial.begin(9600);
+  arduinoSerial.begin(115200);  // Serial communication with ESP32
   Serial.setDebugOutput(true);
   Serial.println();
 
@@ -147,8 +146,12 @@ void handleData() {
     String qrData = server.arg("qr_data");
     Serial.print("Received QR code: ");
     Serial.println(qrData);
-    const char* data = qrData.c_str();
-    arduinoSerial.write(data);
+    // if(strcmp(qrData.c_str(),"Polonnaruwa") == 0){
+    //   arduinoSerial.write("9");
+    //   Serial.println("Data write to arduino");
+    // }
+    arduinoSerial.write(qrData.c_str());
+    // char* data = qrData.c_str();
     server.send(200, "text/plain", "Data received");
   } else {
     server.send(400, "text/plain", "Invalid request");
@@ -182,7 +185,7 @@ void sendReq(){
         Serial.println(httpCode);
         http.end(); //Free the resources
         // Serial.println(payload);
-        arduinoSerial.write(payload.c_str());
+        // arduinoSerial.write(payload.c_str());
       }
   
     else {

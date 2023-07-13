@@ -9,10 +9,9 @@
 #define maxDis 10
 
 int distance = 0;
-int direction = -99;
 int count = 3;  //number of box
 int val;
-char city = "";
+char city = NULL;
 bool boxfound = false;  //status about box found or not
 bool grabBox = false; //status about the box grabed or not
 bool addressFound = false;  //status about correct address found or not
@@ -22,15 +21,16 @@ void setup() {
   setupMeasure();
   setupWheels();
   setupArm();
-  setupGyroscope();
+  // setupGyroscope();
   setupRfid();
+  setupDataTransfer();
   Serial.println("Waiting....");
   delay(3000);
 }
 
 void loop() {
   distance = measure();
-  if (count < 0){
+  if (count <= 0){
     Serial.println("All done.");
     for (;;);
   }
@@ -41,14 +41,24 @@ void loop() {
 
       boxfound = true;
       count -= 1; //grab one
-      cameraON();
+      //==============================
+        // commented because I need to test it
+        //==============================
+        
+        cameraON();
+
+        //==============================
 
       while(1){
-        city = getQRData();
-        if (city != ""){
+        cameraON();
+        getQRData(city);
+        Serial.print("city: ");
+        Serial.println(city);
+        if (city == '9' || city == '8' || city == '7' || city == '6'){
           Serial.println(city);
           break;
         }
+        Serial.println("Not correct");
       }
       //call to python server and turn on cam server
       release();
@@ -60,18 +70,6 @@ void loop() {
       Serial.println("Too close to box");
       while (distance < minDis){
         backward();
-        direction = getGyroscope();
-        if (direction == 1){
-          moveRight();
-          delay(200);
-        }else if(direction == -1){
-          moveLeft();
-          delay(200);
-        }
-        else if(direction == 0){
-          backward();
-        }
-        backward();
         distance = measure();
       }
       stop();
@@ -80,14 +78,24 @@ void loop() {
 
         boxfound = true;
         count -= 1; //grab one
+        //==============================
+        // commented because I need to test it
+        //==============================
+        
         cameraON();
 
+        //==============================
+
         while(1){
-          city = getQRData();
-          if (city != ""){
+          cameraON();
+          getQRData(city);
+          Serial.print("city: ");
+        Serial.println(city);
+          if (city == '9' || city == '8' || city == '7' || city == '6'){
             Serial.println(city);
             break;
           }
+          Serial.println("Not correct");
         }
         release();
         putDown();
@@ -107,14 +115,17 @@ void loop() {
 
         boxfound = true;
         count -= 1; //grab one
-        cameraON();
 
         while(1){
-          city = getQRData();
-          if (city != ""){
+          cameraON();
+          getQRData(city);
+          Serial.print("city: ");
+        Serial.println(city);
+          if (city == '9' || city == '8' || city == '7' || city == '6'){
             Serial.println(city);
             break;
           }
+          Serial.println("Not correct");
         }
         release();
         putDown();
@@ -125,9 +136,11 @@ void loop() {
     }
   }else{
     if (grabBox){
+      Serial.print("city: ");
+      Serial.println(city);
       backward();
-      addressFound = readRfid("Colombo");
-      // addressFound = readRfid(city);
+      // addressFound = readRfid("Colombo");
+      addressFound = readRfid(city);
       delay(500);
       Serial.print("addressFound: ");
       Serial.println(addressFound);
@@ -135,14 +148,17 @@ void loop() {
       if (addressFound && boxfound){
         stop();
         turnLeft();
-        putDown();
+        putDownRight();
         release();
-        liftBox();
+        liftBoxRight();
         turnMid();
         boxfound = false;
         addressFound = false;
         grabBox = false;
         Serial.println("One Work Done....");
+        // city = '0';
+        Serial.print("City: ");
+        Serial.println(city);
         delay(4000);
       }
       // getDecision();

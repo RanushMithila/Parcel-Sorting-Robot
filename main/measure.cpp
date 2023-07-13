@@ -17,5 +17,9 @@ int measure(){
   int distance = (duration/2) / 29.1;    //obtain distance
   Serial.println(distance);
   delay(1000);
-  return distance;
+  if (distance > 0){
+    return distance;
+  }else{
+    measure();
+  }
 }

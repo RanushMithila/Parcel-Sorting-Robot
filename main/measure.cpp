@@ -16,7 +16,7 @@ int measure(){
   int duration = pulseIn(echoPin, HIGH);
   int distance = (duration/2) / 29.1;    //obtain distance
   Serial.println(distance);
-  delay(1000);
+  delay(500);
   if (distance > 0){
     return distance;
   }else{

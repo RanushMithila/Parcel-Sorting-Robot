@@ -28,6 +28,16 @@ void setup() {
 
 void loop() {
   distance = measure();
+  // ==========================================================
+  // I have to test this function
+  // ==========================================================
+  if (strcmp(getRFID(), "ABCDEFGIJ") == 0){
+    Serial.println("Emergency stop");
+  }
+  // ==========================================================
+  // end that function
+  // ==========================================================
+
   if (count <= 0){
     Serial.println("All done.");
     for (;;);

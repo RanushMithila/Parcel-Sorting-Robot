@@ -51,3 +51,14 @@ bool readRfid(char address){
     return false;
   }
 }
+
+
+char *getRFID(){
+  if (rfid.isCard()) {
+    if (rfid.readCardSerial()) {
+      rfidCard = String(rfid.serNum[0]) + String(rfid.serNum[1]) + String(rfid.serNum[2]) + String(rfid.serNum[3]);
+      return rfidCard.c_str();
+    }
+    rfid.halt();
+  }
+}

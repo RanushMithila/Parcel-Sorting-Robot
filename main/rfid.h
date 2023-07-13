@@ -6,6 +6,7 @@
 
 void setupRfid();
 bool readRfid(char address);
+char *getRFID();
 
 
 #endif

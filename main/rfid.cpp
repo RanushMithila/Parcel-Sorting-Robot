@@ -13,19 +13,24 @@ void setupRfid(){
 }
 
 bool readRfid(char address){
+  Serial.print("address: ");
   Serial.println(address);
   if (rfid.isCard()) {
     if (rfid.readCardSerial()) {
+      Serial.println("Reading real card....");
       rfidCard = String(rfid.serNum[0]) + String(rfid.serNum[1]) + String(rfid.serNum[2]) + String(rfid.serNum[3]);
       if (rfidCard == "240132150" && address == '8'){
+        Serial.println("Colombo");
         Serial.println(rfidCard);
         stop();
         return true;
       }else if (rfidCard == "8015945150" && address == '9'){
+        Serial.println("Polonnaruwa");
         Serial.println(rfidCard);
         stop();
         return true;
       }else if (rfidCard == "2112081150" && address == '6'){
+        Serial.println("Gampaha");
         Serial.println(rfidCard);
         stop();
         return true;
@@ -33,7 +38,7 @@ bool readRfid(char address){
         Serial.println(rfidCard);
         stop();
         return true;
-      }else if (rfidCard == "something"){
+      }else if (rfidCard == "3522329166"){
         Serial.println(rfidCard);
         Serial.println("Couldn't find correct location so dump it in this location.");
         stop();
@@ -54,9 +59,11 @@ bool readRfid(char address){
 
 
 char *getRFID(){
+  Serial.println("Reading cards....");
   if (rfid.isCard()) {
     if (rfid.readCardSerial()) {
       rfidCard = String(rfid.serNum[0]) + String(rfid.serNum[1]) + String(rfid.serNum[2]) + String(rfid.serNum[3]);
+      Serial.println(rfidCard.c_str());
       return rfidCard.c_str();
     }
     rfid.halt();

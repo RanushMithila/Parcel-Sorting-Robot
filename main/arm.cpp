@@ -8,7 +8,7 @@ Servo grip;
 
 #define fix 110
 #define rel 75
-#define bottom 85
+#define bottom 95
 #define rightBot 100
 #define up 160
 #define midLoc 135

@@ -31,9 +31,11 @@ void loop() {
   // ==========================================================
   // I have to test this function
   // ==========================================================
-  if (strcmp(getRFID(), "ABCDEFGIJ") == 0){
-    Serial.println("Emergency stop");
-  }
+  // if (strcmp(getRFID(), "177968228") == 0){
+  //   Serial.println("Emergency stop");
+  //   stop();
+  //   for(;;);
+  // }
   // ==========================================================
   // end that function
   // ==========================================================
@@ -98,6 +100,17 @@ void loop() {
       while (distance > maxDis){
         forward();
         distance = measure();
+        // ==========================================================
+        // I have to test this function
+        // ==========================================================
+        // if (strcmp(getRFID(), "177968228") == 0){
+        //   Serial.println("Emergency stop");
+        //   stop();
+        //   for(;;);
+        // }
+        // ==========================================================
+        // end that function
+        // ==========================================================
       }
       stop();
       if (minDis <= distance < maxDis){

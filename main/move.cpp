@@ -1,4 +1,5 @@
 #include "move.h"
+#include "rfid.h"
 #include <Servo.h>
 // Motor A connections
 int in1 = A3;
@@ -24,6 +25,11 @@ void setupWheels(){
 
 void forward(){
   Serial.println("Forward...");
+  if (strcmp(getRFID(), "177968228") == 0){
+    Serial.println("Emergency stop");
+    stop();
+    for(;;);
+  }
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
